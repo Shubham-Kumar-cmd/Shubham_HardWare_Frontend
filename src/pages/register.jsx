@@ -3,6 +3,7 @@ import Base from "../components/Base";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { registerUser } from "../services/user.service";
+import { NavLink } from "react-router-dom";
 
 const Register = () => {
 
@@ -84,7 +85,8 @@ const Register = () => {
                 isError: true,
                 errorData: error
             })
-            toast.error("something went wrong on the server!!")
+            // toast.error("something went wrong on the server!!")
+            toast.error(error.response.data.message)
         })
         .finally(()=>{
             setLoading(false);
@@ -212,7 +214,7 @@ const Register = () => {
                                     </Form.Group>
 
                                     <div className="text-center">
-                                        <p>Already have an account? <a className={{}} href='/login'>Sign in</a></p>
+                                        <p>Already have an account? <NavLink to='/login'>Sign in</NavLink></p>
                                         <Container>
                                             <Button variant="warning" type="submit" disabled={loading}>
                                                 <Spinner 

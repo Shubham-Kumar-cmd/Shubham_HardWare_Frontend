@@ -8,3 +8,10 @@ export const registerUser=(userData)=>{
     .post(`/users`, userData)
     .then(response => response.data);
 }
+
+// login user
+export const loginUser=(userData)=>{
+    return publicAxios
+    .post(`/auth/login`,userData)
+    .then(response=>response.data);
+}

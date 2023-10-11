@@ -4,8 +4,20 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import logo from './../assets/logo192.png';
 import { NavLink } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from '../context/user.context';
 
 const CustomNavbar = () => {
+
+  const userContext=useContext(UserContext)
+
+  const doLogout=()=>{
+      //we can remove setIsLogin and setUserData method bcz of doLogout method 
+      // userContext.setIsLogin(false)
+      // userContext.setUserData(null)
+      userContext.logout()
+  }
+
   return (
 
     <Navbar collapseOnSelect expand="lg" bg='success' variant="dark" className='sticky-top'>{/**className="btn btn-primary", variant='primary' */}
@@ -34,12 +46,30 @@ const CustomNavbar = () => {
             <Nav.Link as={NavLink} to='/contact'>Contact Us</Nav.Link>
             <Nav.Link as={NavLink} to='/cart'>Cart(40)</Nav.Link>{/**href="/cart" */}
           </Nav>
-          <Nav>
-            <Nav.Link as={NavLink} to='/login'>Login</Nav.Link>
-            <Nav.Link eventKey={2} as={NavLink} to='/signup'>
-              Signup
-            </Nav.Link>
-          </Nav>
+          
+          {/* ternary operator */}
+          {
+            (userContext.isLogin)?(
+              <>
+              <Nav>
+                <Nav.Link eventKey={2} as={NavLink} to='/users/home'>{userContext.userData?.user?.email}</Nav.Link>
+                <Nav.Link onClick={doLogout}>
+                  Logout
+                </Nav.Link>
+              </Nav>
+              </>
+            ):(
+              <>
+              <Nav>
+                <Nav.Link as={NavLink} to='/login'>Login</Nav.Link>
+                <Nav.Link as={NavLink} to='/signup'>
+                  Signup
+                </Nav.Link>
+              </Nav>
+              </>
+            )
+          }
+          
         </Navbar.Collapse>
       </Container>
     </Navbar>
