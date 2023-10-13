@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
 import Base from "../components/Base";
-import { loginUser } from "../services/user.service";
+import { loginUser } from "../services/UserService";
 import { Alert, Button, Card, Col, Container, FloatingLabel, Form, Row, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { NavLink, useNavigate } from "react-router-dom";
-import { UserContext } from "../context/user.context";
+import { UserContext } from "../context/UserContext";
 
 const Login=()=>{
 
@@ -42,6 +42,7 @@ const Login=()=>{
             isError:false,
             errorData:null
         })
+        setLoading(false)
     }
 
     //do signin function

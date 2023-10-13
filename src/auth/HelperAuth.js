@@ -9,7 +9,7 @@ export const getUserFromLocalStorage=()=>{
     // getDataFromLocalStorage()?.name;
     const data=getDataFromLocalStorage();
     if (data!=null) {
-        return data.name;
+        return data.user;
     }
     return null;
 }
@@ -38,6 +38,19 @@ export const isLoggedIn=()=>{
     // (getTokenFromLocalStorage())?(true):(false)
     if (getTokenFromLocalStorage()) {
         return true;
+    }
+    return false;
+}
+
+//check user is Admin or not
+export const isAdminUser=()=>{
+    if (isLoggedIn()) {
+        const user = getUserFromLocalStorage()
+        const roles = user.roles;
+        if(roles.find(role=>role.roleId==='wetrsdfwetwfasfwdf')){
+            return true;
+        }
+        return false;
     }
     return false;
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { UserContext } from "./user.context";
-import { doLoginLocalStorage, doLogoutFromLocalStorage, getDataFromLocalStorage, isLoggedIn } from "../auth/helper.auth";
+import { doLoginLocalStorage, doLogoutFromLocalStorage, getDataFromLocalStorage, isAdminUser as adminUser, isLoggedIn } from "../auth/HelperAuth";
+import { UserContext } from "./UserContext";
 
 const UserProvider=({children})=>{
     const [isLogin,setIsLogin]= useState(false)
@@ -13,10 +13,12 @@ const UserProvider=({children})=>{
             jwtToken:""
         }
      */
+    const [isAdminUser, setIsAdminUser]=useState(false)
 
     useEffect(()=>{
         setIsLogin(isLoggedIn())
         setUserData(getDataFromLocalStorage())
+        setIsAdminUser(adminUser())
     }, [])
 
     //login
@@ -24,6 +26,7 @@ const UserProvider=({children})=>{
         doLoginLocalStorage(data)
         setIsLogin(true)
         setUserData(getDataFromLocalStorage())
+        setIsAdminUser(adminUser())
     }
 
     //logout
@@ -31,6 +34,7 @@ const UserProvider=({children})=>{
         doLogoutFromLocalStorage()
         setIsLogin(false)
         setUserData(null)
+        setIsAdminUser(adminUser())
     }
 
 
@@ -44,7 +48,9 @@ const UserProvider=({children})=>{
                 //we can remove setIsLogin method bcz of doLogin method 
                 setIsLogin: setIsLogin,
                 login: doLogin,
-                logout: doLogout
+                logout: doLogout,
+                isAdminUser : isAdminUser,
+                setIsAdminUser : setIsAdminUser
             }}
             >
             {children}

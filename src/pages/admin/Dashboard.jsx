@@ -1,15 +1,19 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { isLoggedIn } from "../../auth/HelperAuth";
+import { isAdminUser } from "../../auth/HelperAuth";
+import { UserContext } from "../../context/UserContext";
+import { useContext } from "react";
 
-const Dashboard = () => {
 
-    // const userContext = useContext(UserContext)
+const AdminDashboard = () => {
+
+    // const userContext=
+    useContext(UserContext)
 
     //private dashboard view
-    const dashboardView = () => {
+    const adminDashboardView = () => {
         return (
             <div>
-                <h1>This is user Dashboard</h1>;
+                <h1>This is admin Dashboard</h1>;
 
                 {/** nested 
                 It will call the nested component
@@ -30,9 +34,8 @@ const Dashboard = () => {
     //                 }}>
     //                     <Card className="border-0 shadow mt-3">
     //                         <Card.Body className="text-center">
-    //                             <h3>You are not logged In !!</h3>
-    //                             <p>Please do login to view the page</p>
-    //                             <Button as={NavLink} to="/login" variant="primary" >Login now</Button>
+    //                             <h3>You are normal user !!</h3>
+    //                             <Button as={NavLink} to="/users/home" variant="primary" >Go to home page</Button>
     //                         </Card.Body>
     //                     </Card>
     //                 </Col>
@@ -44,11 +47,11 @@ const Dashboard = () => {
     return (
         //private route using Conditional rendering
         // ternary operator
-        // (userContext.isLogin) ? dashboardView() : notLoggedInView()
+        // (userContext.isAdminUser) ? adminDashboardView() : notLoggedInView()
 
         //private route using Navigation and Redirect
-        (isLoggedIn()) ? dashboardView() : <Navigate to="/login" />
+        (isAdminUser()) ? adminDashboardView() : <Navigate to="/users/home" />
     );
 }
 
-export default Dashboard;
+export default AdminDashboard;

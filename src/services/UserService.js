@@ -1,6 +1,6 @@
 // user related api calls
 
-import { publicAxios } from "./axios.service"
+import { publicAxios } from "./AxiosService"
 
 // register new user
 export const registerUser=(userData)=>{

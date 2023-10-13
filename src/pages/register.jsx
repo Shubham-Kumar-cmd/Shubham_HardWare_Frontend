@@ -2,7 +2,7 @@ import { Button, Card, Col, Container, FloatingLabel, Form, Row, Spinner } from 
 import Base from "../components/Base";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { registerUser } from "../services/user.service";
+import { registerUser } from "../services/UserService";
 import { NavLink } from "react-router-dom";
 
 const Register = () => {
@@ -44,6 +44,7 @@ const Register = () => {
             isError:false,
             errorData:null
         })
+        setLoading(false)
     }
 
     //do signup function

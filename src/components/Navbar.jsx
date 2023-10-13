@@ -5,7 +5,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import logo from './../assets/logo192.png';
 import { NavLink } from 'react-router-dom';
 import { useContext } from 'react';
-import { UserContext } from '../context/user.context';
+import { UserContext } from '../context/UserContext';
 
 const CustomNavbar = () => {
 
@@ -52,7 +52,14 @@ const CustomNavbar = () => {
             (userContext.isLogin)?(
               <>
               <Nav>
+              {userContext.isAdminUser && (
+                <>
+                  <Nav.Link as={NavLink} to='/admin/home'>AdminDashboard</Nav.Link>
+                </>
+              )}
+              
                 <Nav.Link eventKey={2} as={NavLink} to='/users/home'>{userContext.userData?.user?.email}</Nav.Link>
+                <Nav.Link eventKey={2} as={NavLink} to='/users/orders'>Orders</Nav.Link>
                 <Nav.Link onClick={doLogout}>
                   Logout
                 </Nav.Link>
