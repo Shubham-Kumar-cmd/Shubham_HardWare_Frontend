@@ -9,7 +9,7 @@ const Dashboard = () => {
     const dashboardView = () => {
         return (
             <div>
-                <h1>This is user Dashboard</h1>;
+                {/* <h1>This is user Dashboard</h1>; */}
 
                 {/** nested 
                 It will call the nested component

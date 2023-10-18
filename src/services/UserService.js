@@ -15,3 +15,10 @@ export const loginUser=(userData)=>{
     .post(`/auth/login`,userData)
     .then(response=>response.data);
 }
+
+//get userById
+export const getUser=(userId)=>{
+    return publicAxios
+    .get(`/users/${userId}`)
+    .then(response=>response.data);
+}
