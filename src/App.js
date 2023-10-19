@@ -54,7 +54,8 @@ function App() {
           {/* nested routes */}
           <Route path='/users' element={<Dashboard />}>
             <Route path='home' element={<Home />} />
-            <Route path='profile' element={<Profile />} />
+            {/* passing dynamic data to url */}
+            <Route path='profile/:userId' element={<Profile />} />
             <Route path='about' element={<AboutUser />} />
             <Route path='orders' element={<Order />} />
           </Route>

@@ -1,16 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button, Card, Container, Table } from 'react-bootstrap'
 import profileImage from './../../assets/default.png'
 import { BASE_URL } from '../../services/HelperService'
+import { UserContext } from '../../context/UserContext'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faUser } from '@fortawesome/free-solid-svg-icons'
 
-const UserProfileView = ({ user = null }) => {
+const UserProfileView = ({ user = null, handleShowModal }) => {
 
-    const profileStyle={
-        maxHeight:"150px",
-        maxWidth:"150px",
-        borderRadius:"50%",
+    const { userData, isLogin } = useContext(UserContext)
+
+    const profileStyle = {
+        maxHeight: "150px",
+        maxWidth: "150px",
+        Height: "150px",
+        Width: "150px",
+        borderRadius: "50%",
         objectFit: "cover"
     }
 
@@ -20,17 +25,17 @@ const UserProfileView = ({ user = null }) => {
                 (user && (
                     <Card className='m-3 border-0 shadow'>
                         <Card.Body>
-                        <Container className='text-center mb-2'>
-                        {/* <img className='border border-dark' src={profileImage} alt='UserProfile'  style={profileStyle}/> */}
-                        <img className='border border-dark' src={user.imageName ? BASE_URL + '/users/image/' + user.userId + '?' + new Date().getTime() : profileImage} alt='UserProfile'  style={profileStyle}/>
-                        
-                        {/* <FontAwesomeIcon size="6x" icon={faUser}></FontAwesomeIcon> */}
+                            <Container className='text-center mb-2'>
+                                {/* <img className='border border-dark' src={profileImage} alt='UserProfile'  style={profileStyle}/> */}
+                                <img className='border border-dark' src={user.imageName ? BASE_URL + '/users/image/' + user.userId + '?' + new Date().getTime() : profileImage} alt='UserProfile' style={profileStyle} />
 
-                        </Container>
+                                {/* <FontAwesomeIcon size="6x" icon={faUser}></FontAwesomeIcon> */}
+
+                            </Container>
                             <h3 className='text-center text-primary fw-bold text-uppercase'>{(user.name)}</h3>
                             <div className='mt-3'>
                                 <Card className='' variant="light" style={{
-                                    borderRadius:"10px"
+                                    borderRadius: "10px"
                                 }}>
                                     <Card.Body>
                                         <Table responsive="sm" hover>
@@ -65,10 +70,13 @@ const UserProfileView = ({ user = null }) => {
                                 </Card>
                             </div>
 
-                            <Container className='text-center mt-3'>
-                                <Button className='me-1' variant='success'>Update</Button>
-                                <Button className='ms-1' variant='warning'>Order</Button>
-                            </Container>
+                            {((isLogin && userData.user.userId === user.userId) ? (
+                                <Container className='text-center mt-3'>
+                                    <Button onClick={handleShowModal} className='me-1' variant='success'>Update</Button>
+                                    <Button className='ms-1' variant='warning'>Order</Button>
+                                </Container>
+                            ) : <h2 className='text-center'>You are not logged in!!</h2>)}
+
 
                         </Card.Body>
                     </Card>
