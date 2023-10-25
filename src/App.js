@@ -18,9 +18,13 @@ import UserProvider from './context/UserProvider';
 import Order from './pages/users/Order';
 import AdminDashboard from './pages/admin/Dashboard';
 import AdminHome from './pages/admin/Home';
-import AboutAdmin from './pages/admin/About';
 import AddProduct from './pages/admin/AddProduct';
-import AdminProfile from './pages/admin/Profile';
+import AddCategory from './pages/admin/AddCategory';
+import ViewCategories from './pages/admin/ViewCategories';
+import ViewProducts from './pages/admin/ViewProducts';
+import AdminOrders from './pages/admin/Orders';
+import AdminUsers from './pages/admin/AdminUsers';
+
 function App() {
   return (
 
@@ -63,9 +67,12 @@ function App() {
           {/* nested routes */}
           <Route path='/admin' element={<AdminDashboard />}>
             <Route path='home' element={<AdminHome />} />
-            <Route path='profile' element={<AdminProfile />} />
-            <Route path='about' element={<AboutAdmin />} />
-            <Route path='products' element={<AddProduct />} />
+            <Route path='add-product' element={<AddProduct />} />
+            <Route path='add-category' element={<AddCategory />} />
+            <Route path='categories' element={<ViewCategories />} />
+            <Route path='products' element={<ViewProducts />} />
+            <Route path='orders' element={<AdminOrders />} />
+            <Route path='users' element={<AdminUsers />} />
           </Route>
 
         </Routes>

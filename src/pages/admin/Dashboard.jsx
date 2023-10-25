@@ -2,6 +2,8 @@ import { Navigate, Outlet } from "react-router-dom";
 import { isAdminUser } from "../../auth/HelperAuth";
 import { UserContext } from "../../context/UserContext";
 import { useContext } from "react";
+import { Col, Container, Row } from "react-bootstrap";
+import SideMenu from "../../components/admin/SideMenu";
 
 
 const AdminDashboard = () => {
@@ -13,12 +15,23 @@ const AdminDashboard = () => {
     const adminDashboardView = () => {
         return (
             <div>
-                <h1>This is admin Dashboard</h1>;
-
-                {/** nested 
-                It will call the nested component
-                */}
-                <Outlet />
+                <Container className="p-3">
+                    <Row>
+                        <Col md={{
+                            span:3,
+                            // offset:1
+                        }}
+                        >
+                            <SideMenu />
+                        </Col>
+                        <Col md={9} className="pt-2">
+                        {/** nested 
+                        It will call the nested component
+                        */}
+                        <Outlet />
+                        </Col>
+                    </Row>
+                </Container>
             </div>
         )
     }

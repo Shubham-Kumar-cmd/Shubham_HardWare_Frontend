@@ -6,6 +6,8 @@ import logo from './../assets/logo192.png';
 import { NavLink } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartArrowDown } from '@fortawesome/free-solid-svg-icons';
 
 const CustomNavbar = () => {
 
@@ -44,7 +46,10 @@ const CustomNavbar = () => {
               </NavDropdown.Item>
             </NavDropdown>
             <Nav.Link as={NavLink} to='/contact'>Contact Us</Nav.Link>
-            <Nav.Link as={NavLink} to='/cart'>Cart(40)</Nav.Link>{/**href="/cart" */}
+            <Nav.Link as={NavLink} to='/cart'>
+            <FontAwesomeIcon size="x" icon={faCartArrowDown}/>
+            (40)
+            </Nav.Link>{/**href="/cart" */}
           </Nav>
           
           {/* ternary operator */}

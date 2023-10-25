@@ -15,3 +15,18 @@ code {
 .bg-navbar-color{
   background: #263238 !important;
 }
+
+.list-group-item.active{
+  background: #e3eae7!important;
+  color: #000!important;
+  border: none !important;
+  /* border-radius: 15px; */
+}
+
+.list-group-item{
+  border: none !important;
+}
+
+.list-group-item:hover{
+  cursor: pointer;
+}

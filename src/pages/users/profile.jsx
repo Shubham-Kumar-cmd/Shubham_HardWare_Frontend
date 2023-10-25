@@ -55,7 +55,7 @@ const Profile = () => {
     }
 
     //clear the image
-    const clearImage=(event)=>{
+    const clearImage = (event) => {
         setImage({
             placeholder: defaultImage,
             file: null
@@ -132,7 +132,12 @@ const Profile = () => {
     const updateViewModal = () => {
         return (
             <div>
-                <Modal centered show={show} onHide={handleClose}>
+                <Modal 
+                centered 
+                show={show} 
+                onHide={handleClose}
+                size="lg"
+                >
                     <Modal.Header closeButton>
                         <Modal.Title>Update profile</Modal.Title>
                     </Modal.Header>
