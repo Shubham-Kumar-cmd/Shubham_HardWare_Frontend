@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Card, Container, FloatingLabel, Form, Spinner } from 'react-bootstrap'
 import { toast } from 'react-toastify'
-import { addCategory } from '../../services/ProductService'
+import { addCategory } from '../../services/CategoryService'
 
 const AddCategory = () => {
 

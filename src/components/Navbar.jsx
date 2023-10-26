@@ -47,7 +47,7 @@ const CustomNavbar = () => {
             </NavDropdown>
             <Nav.Link as={NavLink} to='/contact'>Contact Us</Nav.Link>
             <Nav.Link as={NavLink} to='/cart'>
-            <FontAwesomeIcon size="x" icon={faCartArrowDown}/>
+            <FontAwesomeIcon size="1x" icon={faCartArrowDown}/>
             (40)
             </Nav.Link>{/**href="/cart" */}
           </Nav>

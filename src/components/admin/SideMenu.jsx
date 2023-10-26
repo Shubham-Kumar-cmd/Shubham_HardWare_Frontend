@@ -18,34 +18,35 @@ const SideMenu = () => {
         <>
             <ListGroup
                 variant="flush"
+                className='sticky-top'
             >
                 <ListGroup.Item action as={NavLink} to="/admin/home">
-                    <FontAwesomeIcon size="x" icon={faHome} />
+                    <FontAwesomeIcon size="1x" icon={faHome} />
                     <span className='ms-2'>Home</span>
                 </ListGroup.Item>
                 <ListGroup.Item as={NavLink} to="/admin/add-category">
-                    <FontAwesomeIcon size="x" icon={faPlus} />
+                    <FontAwesomeIcon size="1x" icon={faPlus} />
                     <span className="ms-2">Add Category</span>
                 </ListGroup.Item>
                 <ListGroup.Item as={NavLink} to="/admin/categories">
-                    <FontAwesomeIcon size="x" icon={faCheck} />
+                    <FontAwesomeIcon size="1x" icon={faCheck} />
                     <span className="ms-2">View Categories</span>
                 </ListGroup.Item>
                 <ListGroup.Item as={NavLink} to="/admin/add-product">
-                    <FontAwesomeIcon size="x" icon={faCartArrowDown} />
+                    <FontAwesomeIcon size="1x" icon={faCartArrowDown} />
                     <span className='ms-2'>Add Product</span>
                 </ListGroup.Item>
                 <ListGroup.Item as={NavLink} to="/admin/products">
-                    <FontAwesomeIcon size="x" icon={faClapperboard} />
+                    <FontAwesomeIcon size="1x" icon={faClapperboard} />
                     <span className="ms-2">View Products</span>
                 </ListGroup.Item>
                 <ListGroup.Item as={NavLink} to="/admin/orders">
-                    <FontAwesomeIcon size="x" icon={faReorder} />
+                    <FontAwesomeIcon size="1x" icon={faReorder} />
                     <span className="ms-2">Orders</span>
                 </ListGroup.Item>
                 <ListGroup.Item as={NavLink} to="/admin/users" className="d-flex justify-content-between align-items-start">
                     <div>
-                        <FontAwesomeIcon size="x" icon={faUser} />
+                        <FontAwesomeIcon size="1x" icon={faUser} />
                         <span className="ms-2">Users</span>
                     </div>
                     <Badge bg="danger" pill>
@@ -53,11 +54,11 @@ const SideMenu = () => {
                     </Badge>
                 </ListGroup.Item>
                 <ListGroup.Item as={NavLink} to="/users/home">
-                    <FontAwesomeIcon size="x" icon={faDashcube} />
+                    <FontAwesomeIcon size="1x" icon={faDashcube} />
                     <span className="ms-2">Dashboard</span>
                 </ListGroup.Item>
                 <ListGroup.Item onClick={doLogout}>
-                    <FontAwesomeIcon size="x" icon={faBarsProgress} />
+                    <FontAwesomeIcon size="1x" icon={faBarsProgress} />
                     <span className="ms-2">Logout</span>
                 </ListGroup.Item>
             </ListGroup>

@@ -27,7 +27,7 @@ const UserProfileView = ({ user = null, handleShowModal }) => {
                         <Card.Body>
                             <Container className='text-center mb-2'>
                                 {/* <img className='border border-dark' src={profileImage} alt='UserProfile'  style={profileStyle}/> */}
-                                <img className='border border-dark' src={user.imageName ? BASE_URL + '/users/image/' + user.userId + '?' + new Date().getTime() : profileImage} alt='UserProfile' style={profileStyle} />
+                                <img className='border border-dark rounded-circle' src={user.imageName ? BASE_URL + '/users/image/' + user.userId + '?' + new Date().getTime() : profileImage} alt='UserProfile' style={profileStyle} />
 
                                 {/* <FontAwesomeIcon size="6x" icon={faUser}></FontAwesomeIcon> */}
 
