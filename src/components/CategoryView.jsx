@@ -2,7 +2,13 @@ import React from 'react'
 import { Button, Card, Col, Container, Row } from 'react-bootstrap'
 import image from '../assets/default1.png'
 
-const CategoryView = ({ category }) => {
+const CategoryView = ({ category, viewCat ,deleteCat, updateCat }) => {
+
+    const deleteCategory=(categoryId)=>{
+        // alert("test"+categoryId);
+        deleteCat(categoryId)
+    }
+
     return (
         <div>
             <Card className='mb-3 border-0 shadow-sm'>
@@ -24,9 +30,9 @@ const CategoryView = ({ category }) => {
                         </Col>
                         <Col md={2} lg={2}>
                             <Container className='text-center d-grid gap-3'>
-                                <Button variant='info' size='sm'>View</Button>
-                                <Button variant='warning' size='sm'>Update</Button>
-                                <Button variant='danger' size='sm'>Delete</Button>
+                                <Button variant='info' size='sm' onClick={event=>viewCat(category)}>View</Button>
+                                <Button variant='warning' size='sm' onClick={event=>updateCat(category)}>Update</Button>
+                                <Button variant='danger' size='sm' onClick={event=>deleteCategory(category.categoryId)}>Delete</Button>
                             </Container>
                         </Col>
                     </Row>
