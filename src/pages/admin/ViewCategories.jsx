@@ -6,6 +6,7 @@ import Swal from 'sweetalert2'
 import { Button, Card, Col, Container, Form, FormGroup, Modal, Row, Spinner } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 import image from '../../assets/shubham.jpeg'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 const ViewCategories = () => {
 
@@ -15,6 +16,7 @@ const ViewCategories = () => {
 
   const [loading, setLoading] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState(undefined)
+  const [currentPage, setCurrentPage] = useState(0)
 
   // modal view
   const [show, setShow] = useState(false);
@@ -26,10 +28,11 @@ const ViewCategories = () => {
   const handleCloseUpdate = () => setShowUpdate(false);
   const handleShowUpdate = () => setShowUpdate(true);
 
+  // initail page load
   useEffect(() => {
     setLoading(true)
     //get categories api call
-    getCategories()
+    getCategories(0, 6)
       .then(data => {
         console.log(data);
         setCategories(data)
@@ -42,6 +45,30 @@ const ViewCategories = () => {
         setLoading(false)
       })
   }, [])
+
+  //current page load
+  // we can use only one useEffect also but after some modification we can achieve
+  useEffect(() => {
+    if (currentPage > 0) {
+      //get categories api call
+      getCategories(currentPage, 6)
+        .then(data => {
+          console.log(data);
+          setCategories({
+            content: [...categories.content, ...data.content],
+            lastPage: data.lastPage,
+            pageNumber: data.pageNumber,
+            pageSize: data.pageSize,
+            totalElements: data.totalElements,
+            totalPages: data.totalPages
+          })
+        })
+        .catch(error => {
+          console.log(error.response.data.message);
+          toast.error("Error in loading categories from server!!")
+        })
+    }
+  }, [currentPage])
 
   //delete category from main function
   const deleteCategoryMain = (categoryId) => {
@@ -86,46 +113,46 @@ const ViewCategories = () => {
   }
 
   //update category
-  const updateCategoryClicked=(event)=>{
+  const updateCategoryClicked = (event) => {
     handleClose()
     event.preventDefault();
     // Swal.fire("working");
-    if (selectedCategory.title===undefined || selectedCategory.title.trim()==='') {
+    if (selectedCategory.title === undefined || selectedCategory.title.trim() === '') {
       toast.warn("Title field can't be empty!!")
-      return 
+      return
     }
-    if (selectedCategory.description===undefined || selectedCategory.description.trim()==='') {
+    if (selectedCategory.description === undefined || selectedCategory.description.trim() === '') {
       toast.warn("description field can't be empty!!")
-      return 
+      return
     }
     //update api call
     updateCategoriesById(selectedCategory)
-      .then(data=>{
+      .then(data => {
         toast.success("Category updated!!")
         console.log(data);
 
-      //refresh the data of the updated category
-      const updatedCategory = categories.content.map(cat=>{
-        if (cat.categoryId===selectedCategory.categoryId) {
-          cat.title=data.title
-          cat.description=data.description
-          cat.coverImage=data.coverImage
-        }
-        return cat;
-      })
+        //refresh the data of the updated category
+        const updatedCategory = categories.content.map(cat => {
+          if (cat.categoryId === selectedCategory.categoryId) {
+            cat.title = data.title
+            cat.description = data.description
+            cat.coverImage = data.coverImage
+          }
+          return cat;
+        })
 
-      setSelectedCategory({
-        ...categories,
-        content:updatedCategory
-      })
+        setSelectedCategory({
+          ...categories,
+          content: updatedCategory
+        })
 
       })
-      .catch(error=>{
+      .catch(error => {
         toast.error(error.response.data.message)
         // toast.error("Error")
         console.log(error);
       })
-      .finally(()=>{
+      .finally(() => {
         handleCloseUpdate()
       })
   }
@@ -142,6 +169,12 @@ const ViewCategories = () => {
     // alert("update")
     setSelectedCategory(category)
     handleShowUpdate()
+  }
+
+  //load next page function
+  const loadNextPage = () => {
+    console.log("loading next page");
+    setCurrentPage(currentPage + 1)
   }
 
   // model view 
@@ -301,19 +334,32 @@ const ViewCategories = () => {
       {
         (categories.content.length > 0 ? (
           <>
-            {
-              categories.content.map(category => {
-                return (
-                  <CategoryView
-                    category={category}
-                    viewCat={handleView}
-                    updateCat={updateView}
-                    deleteCat={deleteCategoryMain}
-                    key={category.categoryId}
-                  />
-                )
-              })
-            }
+          {/* infinite scroll when the page touches the end */}
+            <InfiniteScroll
+              dataLength={categories.content.length}
+              next={loadNextPage}
+              hasMore={!categories.lastPage}
+              loader={<h3 className='p-2 text-center'>Loading...</h3>}
+              endMessage={
+                <p style={{ textAlign: 'center' }}>
+                  <b>Yay! You have seen it all</b>
+                </p>
+              }
+            >
+              {
+                categories.content.map(category => {
+                  return (
+                    <CategoryView
+                      category={category}
+                      viewCat={handleView}
+                      updateCat={updateView}
+                      deleteCat={deleteCategoryMain}
+                      key={category.categoryId}
+                    />
+                  )
+                })
+              }
+            </InfiniteScroll>
           </>
         ) : notCategoriesView())
       }

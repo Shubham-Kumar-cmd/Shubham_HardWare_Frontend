@@ -7,9 +7,9 @@ export const addCategory = (category) => {
         .then(response => response.data)
 }
 
-export const getCategories = () => {
+export const getCategories = (currentPage = 0, pageSize = 7) => {
     return privateAxios
-        .get(`/categories`)
+        .get(`/categories?pageNumber=${currentPage}&&pageSize=${pageSize}`)
         .then(response => response.data)
 }
 
@@ -21,6 +21,6 @@ export const deleteCategoriesById = (categoryId) => {
 
 export const updateCategoriesById = (category) => {
     return privateAxios
-        .put(`/categories/${category.categoryId}`,category)
+        .put(`/categories/${category.categoryId}`, category)
         .then(response => response.data)
 }
