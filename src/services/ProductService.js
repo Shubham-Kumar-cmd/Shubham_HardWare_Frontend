@@ -36,3 +36,9 @@ export const deleteProductById = (productId) => {
         .then(response => response.data)
 }
 
+export const searchProductByTitle = (query) => {
+    return privateAxios
+        .get(`products/search/${query}`)
+        .then(response => response.data)
+}
+

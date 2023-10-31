@@ -67,18 +67,18 @@ const SingleProductView = ({ product, index, updateProductList, viewProductModal
     return (
         <tr className={setColorForProductAvailability()}>
             <td className='small'>{index + 1}</td>
-            <td className='small' colSpan={3}>{product.title}</td>
+            <td className='small'>{product.title}</td>
             <td className='small'>{product.quantity}</td>
             <td className='small'>
                 <FontAwesomeIcon size="1x" icon={faIndianRupee} />
                 {product.price}
             </td>
             <td className='small'><FontAwesomeIcon size="1x" icon={faIndianRupee} />{product.discountedPrice}</td>
-            <td className='small'>{(product.live ? 'Live' : 'No Live')}</td>
-            <td className='small'>{(product.stock ? 'Stock' : 'OutOfStock')}</td>
-            <td className='small' colSpan={2}>{(product.category ? product.category.title : '-')}</td>
+            <td className='small'>{(product.live ? 'Yes' : 'No')}</td>
+            <td className='small'>{(product.stock ? 'Yes' : 'OutOfStock')}</td>
+            <td className='small'>{(product.category ? product.category.title : '-')}</td>
             <td className='small'>{formatDate(product.addedDate)}</td>
-            <td className='small'>
+            <td className='small' colSpan={2}>
                 <Container className='text-center'>
                     <Button onClick={event=>viewProductModal(product)} className='me-2 bg-primary' variant='warning' size='sm'>
                         <FontAwesomeIcon size="1x" icon={faEye} />
@@ -91,9 +91,6 @@ const SingleProductView = ({ product, index, updateProductList, viewProductModal
                     </Button>
                 </Container>
             </td>
-            {/* {
-                viewProductModal() 
-            } */}
         </tr>
     )
 }
