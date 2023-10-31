@@ -1,20 +1,40 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
-import { Card, Col, Container, Form, Pagination, Row, Table } from 'react-bootstrap'
+import { Button, Card, Col, Container, Form, Modal, Pagination, Row, Table } from 'react-bootstrap'
 import { getAllProducts } from '../../services/ProductService'
 import { toast } from 'react-toastify'
 import SingleProductView from '../../components/admin/SingleProductView'
-import { PRODUCT_PAGE_SIZE } from '../../services/HelperService'
+import { PRODUCT_PAGE_SIZE, getProductImageUrl } from '../../services/HelperService'
+import defaultImage from '../../assets/logo192.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faIndianRupee } from '@fortawesome/free-solid-svg-icons'
 
 const ViewProducts = () => {
 
-  const [products, setProducts] = useState(undefined)
+  const [products, setProducts] = useState({
+    content: []
+  })
+
+  const [currentProduct, setCurrentProduct] = useState(undefined)
+
+  //view
+  const [show, setShow] = useState(false);
+  const closeProductViewModal = () => setShow(false);
+  const showProductViewModal = (product) => {
+    console.log(product);
+    setCurrentProduct(product)
+    setShow(true);
+  }
 
   useEffect(() => {
     getProducts(0, PRODUCT_PAGE_SIZE, 'addedDate', 'desc')
   }, [])
 
+  //parsing date
+  const formatDate = (time) => {
+    return new Date(time).toLocaleString()
+}
 
   const getProducts = (pageNumber, pageSize, sortBy, sortDir) => {
     //get all product api call  
@@ -32,6 +52,110 @@ const ViewProducts = () => {
       })
   }
 
+  const updateProductList = (productId) => {
+    //refresh the page to remove the deleted product
+    const newArray = products.content.filter(p => {
+      return p.productId !== productId
+    })
+
+    setProducts({
+      ...products,
+      content: newArray
+    })
+  }
+
+  //view product modal
+  const viewProductModalView = () => {
+    return (
+      currentProduct && (
+        <>
+          <Modal
+            size='xl'
+            centered
+            show={show}
+            onHide={closeProductViewModal}
+          // fullscreen={true}
+          >
+            {/* {JSON.stringify(currentProduct)} */}
+            <Modal.Header closeButton>
+              <Modal.Title id="">
+                {currentProduct.title}
+              </Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+              {/* productImage */}
+              <Container className='text-center'>
+                <img src={currentProduct.productImageName ? getProductImageUrl(currentProduct.productId) : defaultImage} alt="" style={{
+                  // width: "100%",
+                  height: "300px",
+                  // objectFit:"contain"
+                }} />
+              </Container>
+
+              <Table className='' responsive striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>Info</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Product Id</td>
+                    <td className='fw-bold'>{currentProduct.productId}</td>
+                  </tr>
+                  <tr>
+                    <td>Quantity</td>
+                    <td className='fw-bold'>{currentProduct.quantity}</td>
+                  </tr>
+                  <tr>
+                    <td>Price</td>
+                    <td className='fw-bold'><FontAwesomeIcon size="1x" icon={faIndianRupee} />{currentProduct.price}</td>
+                  </tr>
+                  <tr>
+                    <td>Discounted Price</td>
+                    <td className='fw-bold'><FontAwesomeIcon size="1x" icon={faIndianRupee} />{currentProduct.discountedPrice}</td>
+                  </tr>
+                  <tr>
+                    <td>Stock</td>
+                    <td className='fw-bold'>{currentProduct.stock ? "Yes" : "OutOfStock"}</td>
+                  </tr>
+                  <tr>
+                    <td>Live</td>
+                    <td className='fw-bold'>{currentProduct.live ? "Yes" : "No"}</td>
+                  </tr>
+                  <tr>
+                    <td>Category</td>
+                    <td className='fw-bold'>{currentProduct.category?currentProduct.category.title:'-'}</td>
+                  </tr>
+                  <tr>
+                    <td>Date</td>
+                    <td className='fw-bold'>{formatDate(currentProduct.addedDate)}</td>
+                  </tr>
+
+                </tbody>
+              </Table>
+
+              {/* description */}
+              {/* parsing the html data */}
+              <div dangerouslySetInnerHTML={{ __html: currentProduct.description }} />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={closeProductViewModal}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={closeProductViewModal}>
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </>
+      )
+    )
+  }
+
+  //product view
   const productsView = () => {
     return (
       <Card className='border-0 shadow'>
@@ -69,7 +193,7 @@ const ViewProducts = () => {
             <tbody>
               {
                 products.content.map((product, index) => (
-                  <SingleProductView key={index} product={product} index={index} />
+                  <SingleProductView key={index} updateProductList={updateProductList} viewProductModal={showProductViewModal} product={product} index={index} />
                 ))
               }
             </tbody>
@@ -98,8 +222,8 @@ const ViewProducts = () => {
                   }} key={item}>{item + 1}</Pagination.Item>)
                 ))
               }
-              
-              <Pagination.Ellipsis/>
+
+              <Pagination.Ellipsis />
 
               {/* next page */}
               <Pagination.Next onClick={event => {
@@ -129,6 +253,9 @@ const ViewProducts = () => {
           </Col>
         </Row>
       </Container>
+      {
+        products ? viewProductModalView() : ''
+      }
     </>
   )
 }

@@ -30,3 +30,9 @@ export const getAllProducts = (pageNumber = 0, pageSize = 10, sortBy = 'addedDat
         .then(response => response.data)
 }
 
+export const deleteProductById = (productId) => {
+    return privateAxios
+        .delete(`products/${productId}`)
+        .then(response => response.data)
+}
+
